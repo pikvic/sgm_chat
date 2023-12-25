@@ -22,21 +22,6 @@ def get_start_payload():
         max_tokens=100,
     )
 
-def send_start_payload(payload, token):
-    with GigaChat(credentials=token, verify_ssl_certs=False) as giga:
-        response = giga.chat(payload)
-        payload.messages.append(response.choices[0].message)
-    return response.choices[0].message
-
-def send_message(payload, token):
-    with GigaChat(credentials=token, verify_ssl_certs=False) as giga:
-        user_input = input("User: ")
-        payload.messages.append(Messages(role=MessagesRole.USER, content=user_input))
-        response = giga.chat(payload)
-        payload.messages.append(response.choices[0].message)
-        print("Bot: ", response.choices[0].message.content)
-
-
 class ChatMessage(BaseModel):
     role: str
     content: str
@@ -49,8 +34,8 @@ token = os.environ.get("GIGACHAT_TOKEN", None)
 print(token)
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
