@@ -2,6 +2,8 @@ version: "3"
 services:
   sgm_chat:
     build: .
+    env_file:
+    - .env
     ports:
       - "8070:8000"
     restart: always
