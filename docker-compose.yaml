@@ -1,6 +1,6 @@
 version: "3"
 services:
-  sgm_search:
+  sgm_chat:
     build: .
     ports:
       - "8070:8000"
