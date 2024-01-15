@@ -70,16 +70,16 @@
         }
 
         function sendMessage() {
-            let message = document.getElementById("message").value;
+            let message = document.getElementById("message");
             let url = window.location.href;
             let button = document.getElementById("button");
-            add_message(message, "user");
+            add_message(message.value, "user");
             button.disabled = true;
             fetch(`${url}chat`, {
                 method: 'POST', // Здесь так же могут быть GET, PUT, DELETE
                 body: JSON.stringify({
                     role: "user",
-                    content: message
+                    content: message.value
                 }), // Тело запроса в JSON-формате
                 headers: {
                   // Добавляем необходимые заголовки
@@ -90,7 +90,7 @@
                 .then((response) => response.json())
                 .then((data) => {
                     button.disabled = false;
-                    message = "";
+                    message.value = "";
                     add_message(data["content"], "bot");
                 })
         }
